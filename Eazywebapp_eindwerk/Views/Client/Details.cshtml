@@ -1,0 +1,157 @@
+﻿@model Eazywebapp_eindwerk.Models.ViewModels.ClientInvoiceCount
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="maintitle">@Html.DisplayFor(model => model.Client.Name) @Html.DisplayFor(model => model.Client.LastName)</h1>
+            <p><a class="facturenlink" href="mailto:@Html.DisplayFor(model => model.Client.Email)">@Html.DisplayFor(model => model.Client.Email)</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <h2 class="hostingtitle">@Html.DisplayFor(model => model.Client.CompanyName)</h2>
+            <h6 class="boldtitle">@Html.DisplayNameFor(model => model.Client.Address): </h6>
+            <h6 class="boldtitle">@Html.DisplayNameFor(model => model.Client.City): </h6>
+            <h6 class="boldtitle">@Html.DisplayNameFor(model => model.Client.PostalCode): </h6>
+            <h6 class="boldtitle">@Html.DisplayNameFor(model => model.Client.Country): </h6>
+            <h6 class="boldtitle">@Html.DisplayNameFor(model => model.Client.Phone): </h6>
+            <h6 class="boldtitle">@Html.DisplayNameFor(model => model.Client.VAT): </h6>
+        </div>
+        <div class="col-md-2 mt-5">
+            <p>@Html.DisplayFor(model => model.Client.Address)</p>
+            <p class="lesspadding">@Html.DisplayFor(model => model.Client.City)</p>
+            <p class="lesspadding">@Html.DisplayFor(model => model.Client.PostalCode)</p>
+            <p class="lesspadding">@Html.DisplayFor(model => model.Client.Country)</p>
+            <p class="lesspadding pt-1">@Html.DisplayFor(model => model.Client.Phone)</p>
+            <p class="lesspadding">@Html.DisplayFor(model => model.Client.VAT)</p>
+        </div>
+
+        @{
+                <div class="col-md-7 mt-4">
+
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="small-th">Factuurprijs</th>
+                                <th class="small-th">Factuur datum</th>
+                                <th class="small-th">Verval datum</th>
+                                <th class="small-th">Factuurnummer</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.invoiceList.Count() > 0)
+                            {
+                                @foreach (var item in Model.invoiceList)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InvoicePrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InvoiceDate.Day)/@Html.DisplayFor(modelItem => item.InvoiceDate.Month)/@Html.DisplayFor(modelItem => item.InvoiceDate.Year)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InvoiceExpiry.Day)/@Html.DisplayFor(modelItem => item.InvoiceExpiry.Month)/@Html.DisplayFor(modelItem => item.InvoiceExpiry.Year)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                                        </td>
+                                        <td>
+
+                                            <a asp-action="Delete" asp-controller="Invoice" asp-route-id="@item.InvoiceID"><i class="far trash fa-trash-alt"></i></a> |
+                                            <a asp-action="Details" asp-controller="Invoice" asp-route-id="@item.InvoiceID"><i class="far view fa-eye"></i></a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        <p style="font-size:12px; color:red;">Deze klant heeft <br> nog geen facturen...</p>
+                                    </td>
+
+                                </tr>
+
+                            }
+
+                        </tbody>
+                    </table>
+
+
+                    <table class="table mt-5">
+                        <thead>
+                            <tr>
+                                <th class="small-th">Projectnaam</th>
+                                <th class="small-th">Startdatum</th>
+                                <th class="small-th">Hosting in-house?</th>
+                                <th class="small-th">Werkuren</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.projectList.Count() > 0)
+                            {
+                                @foreach (var item in Model.projectList)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="@item.url">@Html.DisplayFor(modelItem => item.Name)</a> 
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StartDate.Day)/@Html.DisplayFor(modelItem => item.StartDate.Month)/@Html.DisplayFor(modelItem => item.StartDate.Year)
+                                        </td>
+                                        <td>
+                                            @if (item.Hosting == true)
+                                            {
+                                                <p>Ja</p>
+                                            }
+                                            else
+                                            {
+                                                <p>Nee</p>
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TimeSpent)
+                                        </td>
+                                        <td>
+                                            <a asp-action="Edit" asp-controller="Project" asp-route-id="@item.ProjectID"><i class="far edit fa-edit"></i></a> |
+                                            <a asp-action="Delete" asp-controller="Project" asp-route-id="@item.ProjectID"><i class="far trash fa-trash-alt"></i></a> |
+                                            <a asp-action="Details" asp-controller="Project" asp-route-id="@item.ProjectID"><i class="far view fa-eye"></i></a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        <p style="font-size:12px; color:red;">Deze klant heeft <br> nog geen projecten...</p>
+                                    </td>
+
+                                </tr>
+
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+        }
+
+    </div>
+    
+</div>
+        
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Client.ClientID">Aanpassen</a> |
+    <a asp-action="Index">Terug naar overzicht</a>
+</div>

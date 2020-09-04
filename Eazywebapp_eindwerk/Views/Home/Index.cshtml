@@ -1,0 +1,73 @@
+﻿
+@model Eazywebapp_eindwerk.Models.ViewModels.ClientInvoiceProject
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center mt-5 index-header align-content-center">
+    <div class="index-center-title">
+        <h1 class="align-middle">Welcome to your dashboard!</h1>
+        <a href="#">Update profile settings <i class="fa fa-arrow-right"></i></a>
+    </div>
+
+</div>
+
+<div class="container-fluid index-container-layout">
+    <div class="row justify-content-center">
+        <div class="col-md-3 spacing-col-index">
+            <div class="index-projects-div text-center">
+                <h2 class="text-center h2-padding">Projects (@Model.project)</h2>
+                <a href="../project" class="btn btn-outline-primary btn-lg" role="button" aria-disabled="false">See all</a>
+            </div>
+        </div>
+        <div class="col-md-3 spacing-col-index">
+            <div class="index-clients-div text-center">
+                <h2 class="text-center">Clients (@Model.client)</h2>
+                <a href="../client" class="btn btn-outline-primary btn-lg" role="button" aria-disabled="false">See all</a>
+            </div>
+        </div>
+        <div class="col-md-3 spacing-col-index">
+            <div class="index-invoices-div text-center">
+                <h2 class="text-center">Invoices (@Model.invoice)</h2>
+                <a href="../invoice" class="btn btn-outline-primary btn-lg" role="button" aria-disabled="false">See all</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid index-container-img ">
+    @*<div class="row justify-content-center ">
+            <div class="col-md-4 offset-3">
+                <h2 id="bugreporttitle">Bug report</h2>
+                <form action="/" method="post">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Type of bug/error</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Redirect error</option>
+                            <option>Analytic bug</option>
+                            <option>Glitch</option>
+                            <option>Leaked information</option>
+                            <option>Database issue</option>
+                            <option>Working issue</option>
+                            <option>Other issue</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Describe the bug</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Yes I'd like to submit a bug report.</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-4 pt-5">
+                <img src="~/img/bottom.svg" alt="Alternate Text" width="50%" />
+            </div>
+
+        </div>*@
+</div>
+

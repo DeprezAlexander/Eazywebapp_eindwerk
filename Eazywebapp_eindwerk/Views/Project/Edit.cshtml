@@ -1,0 +1,136 @@
+﻿@model Eazywebapp_eindwerk.Models.ViewModels.ProjectClientViewModel
+@using Eazywebapp_eindwerk.Extensions
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>@Html.DisplayFor(model => model.Project.Name)</h1>
+
+<h4>Aanpassen gegevens</h4>
+<hr />
+<div class="row mt-5">
+    <div class="col-md-6">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div class="first-row-project form-row ">
+                <input type="hidden" asp-for="Project.ProjectID" />
+                <input type="hidden" asp-for="Project.ClientID" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col">
+                    <label asp-for="Project.Name" class="control-label"></label>
+                    <input asp-for="Project.Name" class="form-control" placeholder="Project naam" />
+                    <span asp-validation-for="Project.Name" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Project.ProjectDescription" class="control-label"></label>
+                    <textarea asp-for="Project.ProjectDescription" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Project.ProjectDescription" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row mt-4 imgupload ">
+            <div class="col-md-5 custom-file">
+                <input type="file" name="files" class="custom-file-input" id="customFile" />
+                <label asp-for="Project.ProjectImage" class="custom-file-label">Kies afbeelding</label>
+            </div>
+        </div>
+
+           
+
+
+
+
+            <div class="form-row mt-4">
+                <div class="col-md-4">
+                    <label asp-for="Project.StartDate" class="control-label"></label>
+                    <input asp-for="Project.StartDate" class="form-control" />
+                    <span asp-validation-for="Project.StartDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Project.EndDate" class="control-label"></label>
+                    <input asp-for="Project.EndDate" class="form-control" />
+                    <span asp-validation-for="Project.EndDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row mt-4">
+                <div class="col-md-4">
+                    <label asp-for="Project.HostingPrice" class="control-label"></label>
+                    <input asp-for="Project.HostingPrice" class="form-control" />
+                    <span asp-validation-for="Project.HostingPrice" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 ml-4 mt-4 form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Project.Hosting" /> @Html.DisplayNameFor(model => model.Project.Hosting)
+                    </label>
+                </div>
+                <div class="col-md-4 ml-3">
+                    <label asp-for="Project.RenewalDate" class="control-label"></label>
+                    <input asp-for="Project.RenewalDate" class="form-control" />
+                    <span asp-validation-for="Project.RenewalDate" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-row mt-4">
+                <div class="col">
+                    <label asp-for="Project.OffertePrice" class="control-label"></label>
+                    <input asp-for="Project.OffertePrice" class="form-control" />
+                    <span asp-validation-for="Project.OffertePrice" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Project.TimeSpent" class="control-label"></label>
+                    <input asp-for="Project.TimeSpent" class="form-control" />
+                    <span asp-validation-for="Project.TimeSpent" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Project.AdditionalFees" class="control-label"></label>
+                    <input asp-for="Project.AdditionalFees" class="form-control" />
+                    <span asp-validation-for="Project.AdditionalFees" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row mt-4">
+                <div class="col-md-8">
+                    <label asp-for="Project.url" class="control-label"></label>
+                    <input asp-for="Project.url" class="form-control" />
+                    <span asp-validation-for="Project.url" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 ml-4 mt-4 form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Project.IsActive" /> @Html.DisplayNameFor(model => model.Project.IsActive)
+                    </label>
+                </div>
+            </div>
+
+
+            <div class="form-group mt-4">
+                <label asp-for="Project.TypeOfSite" class="control-label"></label>
+                <select asp-for="Project.TypeOfSite" asp-items="Html.GetEnumSelectList<TypeOfSite>()" class="form-control"></select>
+                <span asp-validation-for="Project.TypeOfSite" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Klant</label>
+                    <select id="ddlClientlist" asp-for="Project.ClientID" disabled asp-items="Model.ClientList.ToSelectListItem(Model.Project.ClientID)" class="form-control"></select>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Updaten" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <img class="imgdetails ml-5 mt-5" src="@Model.Project.ProjectImage" alt="Alternate Text" width="100%" />
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Terug naar projecten</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

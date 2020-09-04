@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Eazywebapp_eindwerk.Models.Invoice>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <div class="row mb-5 pb-3">
+        <div class="col-md-4 diffwidth">
+            <h1>Overzicht facturen</h1>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-primary" asp-action="Create" role="button">New invoice +</a>
+        </div>
+    </div>
+
+
+<p>
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoicePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceExpiry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoicePrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceDate.Day)/@Html.DisplayFor(modelItem => item.InvoiceDate.Month)/@Html.DisplayFor(modelItem => item.InvoiceDate.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceExpiry.Day)/@Html.DisplayFor(modelItem => item.InvoiceExpiry.Month)/@Html.DisplayFor(modelItem => item.InvoiceExpiry.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                </td>
+                <td>
+                    <a asp-controller="Project" asp-action="Details" asp-route-id="@item.ProjectID"> @Html.DisplayFor(modelItem => item.Project.Name)</a>
+                </td>
+                <td>
+                    <a asp-controller="Client" asp-action="Details" asp-route-id="@item.ClientID"> @Html.DisplayFor(modelItem => item.Client.Name) @Html.DisplayFor(modelItem => item.Client.LastName)</a>
+                </td>
+                <td>
+                    
+                    <a asp-action="Delete" asp-route-id="@item.InvoiceID"><i class="far trash fa-trash-alt"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.InvoiceID"><i class="far view fa-eye"></i></a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

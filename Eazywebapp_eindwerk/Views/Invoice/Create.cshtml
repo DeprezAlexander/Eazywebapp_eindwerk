@@ -1,0 +1,70 @@
+﻿@model Eazywebapp_eindwerk.Models.ViewModels.InvoiceClientProjectViewModel
+@using Eazywebapp_eindwerk.Extensions
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Nieuwe factuur toevoegen</h1>
+
+<h4>Vul hieronder de gegevens in.</h4>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div class="first-row-project form-row ">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col">
+                    <select id="ddlClientlist" asp-for="Invoice.ProjectID" asp-items="Model.ProjectList.ToSelectListItem(Model.Invoice.ProjectID)" class="form-control"></select>
+                </div>
+            </div>
+
+            <div class="form-row mt-4">
+                <div class="col-md-8">
+                    <label asp-for="Invoice.InvoiceNumber" class="control-label"></label>
+                    <input asp-for="Invoice.InvoiceNumber" class="form-control" />
+                    <span asp-validation-for="Invoice.InvoiceNumber" class="text-danger"></span>
+                </div>
+                
+            </div>
+            <div class="form-row mt-4">
+                <div class="col-md-6">
+                    <label asp-for="Invoice.InvoiceDate" class="control-label"></label>
+                    <input asp-for="Invoice.InvoiceDate" class="form-control" />
+                    <span asp-validation-for="Invoice.InvoiceDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Invoice.InvoiceExpiry" class="control-label"></label>
+                    <input asp-for="Invoice.InvoiceExpiry" class="form-control" />
+                    <span asp-validation-for="Invoice.InvoiceExpiry" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Aanmaken" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <img class="floatimg ml-5 mt-5" src="~/img/createproject.svg" alt="Alternate Text" width="100%" />
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Terug naar facturen</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    }
+    <script>
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+    </script>
+}
+
+

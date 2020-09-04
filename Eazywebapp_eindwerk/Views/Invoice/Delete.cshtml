@@ -1,0 +1,59 @@
+﻿@model Eazywebapp_eindwerk.Models.Invoice
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Bent u zeker dat u de factuur wilt verwijderen?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.InvoicePrice)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.InvoicePrice)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.InvoiceDate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.InvoiceDate.Day)/@Html.DisplayFor(model => model.InvoiceDate.Month)/@Html.DisplayFor(model => model.InvoiceDate.Year)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.InvoiceExpiry)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.InvoiceExpiry.Day)/@Html.DisplayFor(model => model.InvoiceExpiry.Month)/@Html.DisplayFor(model => model.InvoiceExpiry.Year)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.InvoiceNumber)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.InvoiceNumber)
+                </dd>
+                
+            </div>   
+            <form class="mt-5" asp-action="Delete">
+                <input type="hidden" asp-for="InvoiceID" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a asp-action="Index">Terug naar overzicht</a>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <img class="floatimg ml-5 mt-5" src="~/img/delete.svg" alt="Alternate Text" width="100%" />
+        </div>
+    </dl>
+    
+    
+</div>

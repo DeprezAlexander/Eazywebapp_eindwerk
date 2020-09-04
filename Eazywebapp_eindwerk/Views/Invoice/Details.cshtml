@@ -1,0 +1,135 @@
+﻿@model Eazywebapp_eindwerk.Models.Invoice
+
+@{
+    ViewData["Title"] = "Facturatie";
+}
+
+
+    <div id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5">
+                    <p>
+                        <strong>@Html.DisplayFor(model => model.Project.Name)</strong></br>
+                        @Html.DisplayFor(model => model.Project.Client.Name) @Html.DisplayFor(model => model.Project.Client.LastName)</br>
+                        @Html.DisplayFor(model => model.Project.Client.Address)</br>
+                        @Html.DisplayFor(model => model.Project.Client.City) @Html.DisplayFor(model => model.Project.Client.PostalCode)
+                    </p>
+                </div>
+                <div class="col">
+                    <img class="factuurlogo" src="~/img/logo2zwart.png" alt="Eazywebs logo" />
+                    <p class="ml-5 pl-5">
+                        Eazywebs </br>
+                        Orveiestraat 8a</br>
+                        8550, Zwevegem</br></br>
+
+                        <strong>Ondernemersnr:</strong> 0692.851.796</br>
+                        <strong>BANK:</strong> Argenta</br>
+                        <strong>IBAN:</strong> BE07973123241766</br>
+                        <strong>BIC:</strong> ARSPBE22</br></br>
+
+                        <strong>GSM:</strong> 0471731076</br>
+                        <strong>E-mail:</strong> <a href="mailto:Info@eazywebs.be">Info@eazywebs.be</a> /</br>
+                        <a href="mailto:deprez.alexander@hotmail.com">deprez.alexander@hotmail.com</a></br>
+                        <strong>Website:</strong> <a href="www.eazywebs.be">www.eazywebs.be</a>
+
+                    </p>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col mt-5">
+                    <h1>Factuur</h1>
+                    <p>
+                        <strong>Factuurnummer:</strong> @Html.DisplayFor(model => model.InvoiceNumber)</br>
+                        <strong>Facturatie datum:</strong> @Html.DisplayFor(model => model.InvoiceDate.Day)/@Html.DisplayFor(model => model.InvoiceDate.Month)/@Html.DisplayFor(model => model.InvoiceDate.Year)</br>
+                        <strong>Vervaldatum:</strong> @Html.DisplayFor(model => model.InvoiceExpiry.Day)/@Html.DisplayFor(model => model.InvoiceExpiry.Month)/@Html.DisplayFor(model => model.InvoiceExpiry.Year)
+                    </p>
+                </div>
+            </div>
+            @{
+                double btw = (Model.InvoicePrice / 100) * 21;
+                double totaalbtw = btw + Model.InvoicePrice;
+            }
+            <div class="row mt-5">
+                <div class="col">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Omschrijving</th>
+                                <th scope="col">Prijs</th>
+                                <th scope="col">BTW</th>
+                                <th scope="col">Totaal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@Html.DisplayFor(model => model.InvoiceDate.Day)/@Html.DisplayFor(model => model.InvoiceDate.Month)/@Html.DisplayFor(model => model.InvoiceDate.Year)</td>
+                                <td>@Html.DisplayFor(model => model.Project.Name) website pakket (@Html.DisplayFor(model => model.Project.AdditionalFees))</td>
+                                <td>€@Html.DisplayFor(model => model.InvoicePrice)</td>
+                                <td>€@btw</td>
+                                <td>€@totaalbtw</td>
+                            </tr>
+                            @if (Model.Project.Hosting == true)
+                            {
+                                double btwhosting = (Model.Project.HostingPrice / 100) * 21;
+                                double totaal = Model.InvoicePrice + Model.Project.HostingPrice + btw + btwhosting;
+                                double totaalbtwhosting = btwhosting + Model.Project.HostingPrice;
+                                <tr>
+                                    <td>@Html.DisplayFor(model => model.InvoiceDate.Day)/@Html.DisplayFor(model => model.InvoiceDate.Month)/@Html.DisplayFor(model => model.InvoiceDate.Year)</td>
+                                    <td>@Html.DisplayFor(model => model.Project.Name) hosting per jaar</td>
+                                    <td>€@Html.DisplayFor(model => model.Project.HostingPrice)</td>
+                                    <td>€@btwhosting</td>
+                                    <td>€@totaalbtwhosting</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Factuur totaal</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>€@totaal</strong></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                double totaal = Model.InvoicePrice + btw;
+                                <tr>
+                                    <th scope="row">Factuur totaal</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>€@totaal</strong></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col">
+                    <p>
+                        Indien vragen of opmerkingen aarzel niet ons te contacteren op 0471731076 of via <a href="mailto:Info@eazywebs.be">Info@eazywebs.be</a>
+                        Kleine onderneming onderworpen aan de vrijstellingsregeling van belasting. Btw niet toepasselijk.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="noprint">
+    <button class="btn btn-primary mt-5 ml-3" onclick="window.print()">Print this page</button> </br></br>
+    @*<a asp-action="Edit" asp-route-id="@Model.InvoiceID">Edit</a> |*@
+    <p class="ml-3"> Or </p>
+    <a class="ml-3" asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

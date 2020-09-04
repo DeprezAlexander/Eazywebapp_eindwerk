@@ -1,0 +1,96 @@
+﻿@model Eazywebapp_eindwerk.Models.Project
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@{
+    bool outOfTime = false;
+    bool timeToRenew = false;
+    DateTime currentDate = DateTime.Today;
+    var Gap = Model.RenewalDate.AddMonths(-2);
+
+    if (currentDate >= Gap && currentDate <= Model.RenewalDate)
+    {
+        timeToRenew = true;
+    }
+    if (currentDate > Model.RenewalDate)
+    {
+        outOfTime = true;
+    }
+}
+
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="maintitle"><a href="@Html.DisplayFor(model => model.url)">@Html.DisplayFor(model => model.Name)</a></h1>
+                <p><a class="facturenlink" href="/client/details/@Html.DisplayFor(model => model.ClientID)">@Html.DisplayFor(model => model.Client.Name) @Html.DisplayFor(model => model.Client.LastName) </a></p>
+            </div>
+            <div class="col-md-5">
+                <h4 class="secondtitle">@Html.DisplayFor(model => model.ProjectDescription)</h4>
+                <a href="@Html.DisplayFor(model=> model.url)" target="_blank" class="btn btn-primary btn-lg" role="button" aria-disabled="false">Bezoek project</a>
+            </div>
+            <div class="col-md-6 offset-1">
+                <img class="imgdetails" src="@Model.ProjectImage" alt="Alternate Text" width="100%" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <h5 class="boldtitle">@Html.DisplayNameFor(model => model.StartDate)</h5>
+                <p>@Html.DisplayFor(model => model.StartDate.Day)/@Html.DisplayFor(model => model.StartDate.Month)/@Html.DisplayFor(model => model.StartDate.Year)</p>
+            </div>
+            <div class="col-md-2">
+                <h5 class="boldtitle">@Html.DisplayNameFor(model => model.EndDate)</h5>
+                <p>@Html.DisplayFor(model => model.EndDate.Day)/@Html.DisplayFor(model => model.EndDate.Month)/@Html.DisplayFor(model => model.EndDate.Year)</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <h2 class="hostingtitle">Hosting</h2>
+                <h6 class="boldtitle">@Html.DisplayNameFor(model => model.Hosting): </h6>
+                <h6 class="boldtitle">@Html.DisplayNameFor(model => model.HostingPrice): </h6>
+                <h6 class="boldtitle">@Html.DisplayNameFor(model => model.RenewalDate): </h6>
+            </div>
+            <div class="col-md-3 mt-5">
+                <p>@Html.DisplayFor(model => model.Hosting)</p>
+                <p class="lesspadding">@Html.DisplayFor(model => model.HostingPrice)</p>
+                <p class="lesspadding">@Html.DisplayFor(model => model.RenewalDate.Day)/@Html.DisplayFor(model => model.RenewalDate.Month)/@Html.DisplayFor(model => model.RenewalDate.Year)</p>
+
+            </div>
+
+            <div class="col-md-3">
+                <h2 class="hostingtitle">Project</h2>
+                <h6 class="boldtitle">@Html.DisplayNameFor(model => model.TimeSpent): </h6>
+                <h6 class="boldtitle">@Html.DisplayNameFor(model => model.IsActive): </h6>
+                <h6 class="boldtitle">@Html.DisplayNameFor(model => model.OffertePrice): </h6>
+                <h6 class="boldtitle">@Html.DisplayNameFor(model => model.AdditionalFees): </h6>
+            </div>
+            <div class="col-md-3 mt-5">
+                <p>@Html.DisplayFor(model => model.TimeSpent)</p>
+                <p class="lesspadding">@Html.DisplayFor(model => model.IsActive)</p>
+                <p class="lesspadding">@Html.DisplayFor(model => model.OffertePrice)</p>
+                @if (Model.AdditionalFees == null)
+                {
+                    <p class="lesspadding">Geen</p>
+                }
+                else
+                {
+                    <p class="lesspadding">@Html.DisplayFor(model => model.AdditionalFees)</p>
+                }
+            </div>
+        </div>
+        @if (timeToRenew == true)
+        {
+            <p style="color:darkorange; font-weight:bold;">(Hosting vervalt binnen 2 maanden)</p>
+        }
+        @if (outOfTime == true)
+        {
+            <p style="color:red; font-weight:bold;">(Hosting vervallen, vernieuw zo snel mogelijk!)</p>
+        }
+
+    </div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ProjectID">Aanpassen</a> |
+    <a asp-action="Index">Terug naar overzicht</a>
+</div>

@@ -1,0 +1,168 @@
+﻿@using Eazywebapp_eindwerk.Models.ViewModels
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Eazywebapp_eindwerk</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <script src="https://kit.fontawesome.com/f156648cf9.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+
+</head>
+<body>
+    <header>
+        @if (User.Identity.IsAuthenticated)
+        {
+            @if (User.IsInRole("User") || User.IsInRole("Admin"))
+            {
+
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom box-shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/logo2wit.png" alt="Logo" width="50%" /></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                            <ul class="navbar-nav flex-grow-1 mt-1">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Project" asp-action="Index">Projects</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Client" asp-action="Index">Clients</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Invoice" asp-action="Index">Invoices</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <h4 class="mr-4 signedas">You are signed in as: @User.Identity.Name</h4>
+                        <form asp-controller="Account" asp-action="SignOut" method="post">
+                            <button class="btn btn-outline-secondary btn-signout btn-sm mr-5" type="submit">Sign Out</button>
+                        </form>
+                    }
+                </nav>
+            }
+        }
+
+        <br />
+
+
+
+    </header>
+    
+    <div class="container">
+        <main role="main" class="pb-3 mt-5 mb-5">
+            @RenderBody()
+        </main>
+    </div>
+    @{ if (ViewContext.RouteData.Values["Controller"].ToString() != "Account")
+        {
+
+
+            <footer class="border-top footer text-muted noprint mt-5 ">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-md-3 ">
+                            <img src="~/img/logo2zwart.png" alt="Logo eazywebs" /> <br />
+                            <p class="pl-5 ml-2">
+                                &copy; 2020 - Eazywebapp_eindwerk
+                            </p>
+                        </div>
+
+                        <div class="col-md-3 mt-4">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a asp-area="" asp-controller="Project" asp-action="Index">Projects</a>
+
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a asp-area="" asp-controller="Client" asp-action="Index">Clients</a>
+
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a asp-area="" asp-controller="Invoice" asp-action="Index">Invoice</a>
+
+                                </li>
+                            </ul>
+                            <br />
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a asp-area="" asp-controller="Account" asp-action="signin">Sign in</a>
+
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a asp-area="" asp-controller="Account" asp-action="register">Create user</a>
+
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a asp-area="" asp-controller="Home" asp-action="index">Home</a>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row  ">
+                                <div class="col offset-2">
+                                    <h2 id="bugreporttitle">Bug report</h2>
+                                    <form action="/" method="post">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Type of bug/error</label>
+                                            <select class="form-control" id="exampleFormControlSelect1">
+                                                <option>Redirect error</option>
+                                                <option>Analytic bug</option>
+                                                <option>Glitch</option>
+                                                <option>Leaked information</option>
+                                                <option>Database issue</option>
+                                                <option>Working issue</option>
+                                                <option>Other issue</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">Describe the bug</label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                            <label class="form-check-label" for="exampleCheck1">Yes I'd like to submit a bug report.</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
+                                @*<div class="col-md-4 pt-5">
+                                        <img src="~/img/bottom.svg" alt="Alternate Text" width="50%" />
+                                    </div>*@
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+
+
+
+        }
+    }
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

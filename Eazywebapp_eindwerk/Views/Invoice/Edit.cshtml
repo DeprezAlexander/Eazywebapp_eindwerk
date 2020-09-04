@@ -1,0 +1,49 @@
+﻿@model Eazywebapp_eindwerk.Models.ViewModels.InvoiceClientProjectViewModel
+@using Eazywebapp_eindwerk.Extensions
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Invoice</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Invoice.InvoiceID" />
+            <div class="form-group">
+                <label asp-for="Invoice.InvoicePrice" class="control-label"></label>
+                <input asp-for="Invoice.InvoicePrice" class="form-control" />
+                <span asp-validation-for="Invoice.InvoicePrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.InvoiceDate" class="control-label"></label>
+                <input asp-for="Invoice.InvoiceDate" class="form-control" />
+                <span asp-validation-for="Invoice.InvoiceDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.InvoiceExpiry" class="control-label"></label>
+                <input asp-for="Invoice.InvoiceExpiry" class="form-control" />
+                <span asp-validation-for="Invoice.InvoiceExpiry" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.InvoiceNumber" class="control-label"></label>
+                <input asp-for="Invoice.InvoiceNumber" class="form-control" />
+                <span asp-validation-for="Invoice.InvoiceNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

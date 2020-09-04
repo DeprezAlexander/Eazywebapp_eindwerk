@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Eazywebapp_eindwerk.Models.Project>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+
+<p>
+    <a class="btn btn-primary ml-5" asp-action="Create" role="button">New project +</a>
+</p>
+
+
+<div class="container-fluid mt-5">
+    <div class="row justify-content-center">
+        @{int count = 0; }
+        @foreach (var item in Model)
+        {
+            bool outOfTime = false;
+            bool timeToRenew = false;
+            DateTime currentDate = DateTime.Today;
+
+            var Gap = item.RenewalDate.AddMonths(-2);
+
+            if (currentDate >= Gap && currentDate <= item.RenewalDate)
+            {
+                timeToRenew = true;
+            }
+            if(currentDate > item.RenewalDate)
+            {
+                outOfTime = true;
+            }
+
+
+        <div class="col-md-3  mb-5 text-center spacing-col-project projectblurb" style="background-image:linear-gradient(rgba(99,65,234,.85), rgba(99,65,234,.85)), url('@item.ProjectImage');">
+            <h2>
+                @Html.DisplayFor(modelItem => item.Name)
+
+                @if (timeToRenew == true)
+                {
+                    <span style="color:yellow; font-weight:bold; font-size:12px;"><i class="fas fa-exclamation-triangle"></i></span>
+                }
+                @if (outOfTime == true)
+                {
+                    <span style="color:red; font-weight:bold; font-size:12px;"><i class="fas fa-exclamation-triangle"></i></span>
+                }
+            </h2>
+            
+            <p><a asp-action="Edit" asp-route-id="@item.ProjectID"><i class="far fa-edit"></i></a> <span style="color: white;">-</span> <a asp-action="Delete" asp-route-id="@item.ProjectID"><i class="far fa-trash-alt"></i></a></p>
+            <a href="../project/details/@item.ProjectID" class="btn btn-outline-primary btn-lg" role="button" aria-disabled="false">Visit project</a>
+        </div>
+
+        }
+    </div>
+</div>

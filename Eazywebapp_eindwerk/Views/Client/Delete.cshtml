@@ -1,0 +1,89 @@
+﻿@model Eazywebapp_eindwerk.Models.ViewModels.ClientInvoiceProjectDeleteViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+@if (Model.CountInvoices == 1)
+{
+    <h2 style="color:red;">Aan deze klant is nog @Html.DisplayFor(s => s.CountInvoices) factuur gelinkt, <a asp-controller="Invoice" asp-action="Index">verwijder die eerst</a>.</h2>
+}
+else if (Model.CountInvoices > 1)
+{
+    <h2 style="color:red;">Aan deze klant zijn nog @Html.DisplayFor(s => s.CountInvoices) facturen gelinkt, <a asp-controller="Invoice" asp-action="Index">verwijder die eerst</a>.</h2>
+}
+@if (Model.CountProjects == 1)
+{
+    <h2 style="color:red;">Aan deze klant is nog @Html.DisplayFor(s => s.CountProjects) project gelinkt, <a asp-controller="Project" asp-action="Index">verwijder die eerst</a>.</h2>
+}
+else if (Model.CountProjects > 1)
+{
+    <h2 style="color:red;">Aan deze klant zijn nog @Html.DisplayFor(s => s.CountProjects) projecten gelinkt, <a asp-controller="Project" asp-action="Index">verwijder die eerst</a>.</h2>
+}
+<h1>Delete</h1>
+
+<h3>Bent u zeker dat u de klant wilt verwijderen?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Client.Email)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Client.Email)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Client.Name)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Client.Name)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Client.LastName)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Client.LastName)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Client.Phone)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Client.Phone)
+                </dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Client.CompanyName)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Client.CompanyName)
+                </dd>
+            </div>
+            <form class="mt-5" asp-action="Delete">
+                <input type="hidden" asp-for="Client.ClientID" />
+                @if (Model.deleteable == true)
+                {
+                    <input type="submit" value="Delete" class="btn btn-danger" /> 
+                }
+                else
+                {
+                    <input type="submit" value="Delete" disabled class="btn btn-danger" /> 
+                }
+
+                | <a asp-action="Index">Terug naar overzicht</a>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <img class="floatimg ml-5 mt-5" src="~/img/delete.svg" alt="Alternate Text" width="100%" />
+        </div>
+    </dl>
+
+
+</div>
