@@ -1,15 +1,22 @@
-﻿using System;
+﻿
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
+using Xunit.Sdk;
 
 namespace Eazywebapp_eindwerk.Models
 {
     public class Project
     {
+        private DateTime _currentTime = DateTime.Now;
+
         //PROJECT ID
         [Key]
         public int ProjectID { get; set; }
@@ -31,14 +38,26 @@ namespace Eazywebapp_eindwerk.Models
         //START DATE
         [Display(Name = "Start datum")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate
+        {
+            get
+            {
+                return _currentTime;
+            }
+            set { StartDate = value; }
+        }
 
         //END DATE
         [Display(Name = "Eind datum")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime EndDate { get; set; }
+        public DateTime EndDate
+        {
+            get
+            {
+                return _currentTime;
+            }
+            set { EndDate = value; }
+        }
 
         //HOSTING
         [Display(Name = "Hosting in-house (J/N)")]
@@ -46,13 +65,22 @@ namespace Eazywebapp_eindwerk.Models
 
         //HOSTING PRICE 
         [Display(Name = "Hosting prijs (EUR)")]
+        //[RequiredIf("Hosting == true")]
+        //[AssertThat("HostingPrice !== 0")]
         public double HostingPrice { get; set; }
+
 
         //RENEWAL DATE
         [Display(Name = "Verval datum hosting")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime RenewalDate { get; set; }
+        public DateTime RenewalDate
+        {
+            get
+            {
+                return _currentTime;
+            }
+            set { RenewalDate = value; }
+        }
 
         //OFFERTE PRICE
         [Display(Name = "Prijs offerte")]
