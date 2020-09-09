@@ -29,11 +29,13 @@
             </div>
             <div class="form-row mt-4">
                 <div class="col-md-6">
+                    <p style="font-size:10px;">Laat blanco om de datum van vandaag te gebruiken.</p>
                     <label asp-for="Invoice.InvoiceDate" class="control-label"></label>
                     <input asp-for="Invoice.InvoiceDate" class="form-control" />
                     <span asp-validation-for="Invoice.InvoiceDate" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
+                    <p style="font-size:10px;">Laat blanco om de datum van vandaag + 1 maand te gebruiken.</p>
                     <label asp-for="Invoice.InvoiceExpiry" class="control-label"></label>
                     <input asp-for="Invoice.InvoiceExpiry" class="form-control" />
                     <span asp-validation-for="Invoice.InvoiceExpiry" class="text-danger"></span>

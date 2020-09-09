@@ -80,31 +80,138 @@ namespace Eazywebapp_eindwerk.Controllers
             
             if (ModelState.IsValid)
             {
-                _context.Add(project);
-                await _context.SaveChangesAsync();
-                string webRootPath = _hostingEnvironment.WebRootPath;
-                var files = HttpContext.Request.Form.Files;
-                var projectFromDb = await _context.Project.FindAsync(project.ProjectID);
-                string extension;
-                if (files.Count > 0)
+                DateTime dDate = new DateTime(0001, 01, 01);
+                DateTime nDate = DateTime.Today;
+                
+                if (project.RenewalDate == dDate)
                 {
-                    extension = Path.GetExtension(files[0].FileName);
-                    string imageName = project.ProjectID + extension;
-                    string path = Path.Combine(webRootPath + SD.DefaultImagePath, imageName);
-                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    if(project.StartDate == dDate)
                     {
-                        files[0].CopyTo(fileStream);
+                        if(project.EndDate == dDate)
+                        {
+                            project.EndDate = nDate.AddMonths(2);
+                            project.StartDate = nDate;
+                            project.RenewalDate = nDate;
+                            _context.Add(project);
+                            await _context.SaveChangesAsync();
+                            string webRootPath = _hostingEnvironment.WebRootPath;
+                            var files = HttpContext.Request.Form.Files;
+                            var projectFromDb = await _context.Project.FindAsync(project.ProjectID);
+                            string extension;
+                            if (files.Count > 0)
+                            {
+                                extension = Path.GetExtension(files[0].FileName);
+                                string imageName = project.ProjectID + extension;
+                                string path = Path.Combine(webRootPath + SD.DefaultImagePath, imageName);
+                                using (var fileStream = new FileStream(path, FileMode.Create))
+                                {
+                                    files[0].CopyTo(fileStream);
+                                }
+                            }
+                            else
+                            {
+                                extension = SD.DefaultImageExtension;
+                                var uploads = Path.Combine(webRootPath + SD.DefaultImagePath + SD.DefaultProjectImage);
+                                System.IO.File.Copy(uploads, webRootPath + SD.DefaultImagePath + project.ProjectID.ToString() + extension);
+                            }
+                            projectFromDb.ProjectImage = SD.DefaultImagePath + project.ProjectID + extension;
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction(nameof(Index));
+                        }
+                        else
+                        {
+                            project.StartDate = nDate;
+                            _context.Add(project);
+                            await _context.SaveChangesAsync();
+                            string webRootPath = _hostingEnvironment.WebRootPath;
+                            var files = HttpContext.Request.Form.Files;
+                            var projectFromDb = await _context.Project.FindAsync(project.ProjectID);
+                            string extension;
+                            if (files.Count > 0)
+                            {
+                                extension = Path.GetExtension(files[0].FileName);
+                                string imageName = project.ProjectID + extension;
+                                string path = Path.Combine(webRootPath + SD.DefaultImagePath, imageName);
+                                using (var fileStream = new FileStream(path, FileMode.Create))
+                                {
+                                    files[0].CopyTo(fileStream);
+                                }
+                            }
+                            else
+                            {
+                                extension = SD.DefaultImageExtension;
+                                var uploads = Path.Combine(webRootPath + SD.DefaultImagePath + SD.DefaultProjectImage);
+                                System.IO.File.Copy(uploads, webRootPath + SD.DefaultImagePath + project.ProjectID.ToString() + extension);
+                            }
+                            projectFromDb.ProjectImage = SD.DefaultImagePath + project.ProjectID + extension;
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction(nameof(Index));
+
+                        }
+
                     }
+                    else
+                    {
+                        project.RenewalDate = nDate;
+                        _context.Add(project);
+                        await _context.SaveChangesAsync();
+                        string webRootPath = _hostingEnvironment.WebRootPath;
+                        var files = HttpContext.Request.Form.Files;
+                        var projectFromDb = await _context.Project.FindAsync(project.ProjectID);
+                        string extension;
+                        if (files.Count > 0)
+                        {
+                            extension = Path.GetExtension(files[0].FileName);
+                            string imageName = project.ProjectID + extension;
+                            string path = Path.Combine(webRootPath + SD.DefaultImagePath, imageName);
+                            using (var fileStream = new FileStream(path, FileMode.Create))
+                            {
+                                files[0].CopyTo(fileStream);
+                            }
+                        }
+                        else
+                        {
+                            extension = SD.DefaultImageExtension;
+                            var uploads = Path.Combine(webRootPath + SD.DefaultImagePath + SD.DefaultProjectImage);
+                            System.IO.File.Copy(uploads, webRootPath + SD.DefaultImagePath + project.ProjectID.ToString() + extension);
+                        }
+                        projectFromDb.ProjectImage = SD.DefaultImagePath + project.ProjectID + extension;
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+
+                    }
+
                 }
                 else
                 {
-                    extension = SD.DefaultImageExtension;
-                    var uploads = Path.Combine(webRootPath + SD.DefaultImagePath + SD.DefaultProjectImage);
-                    System.IO.File.Copy(uploads, webRootPath + SD.DefaultImagePath + project.ProjectID.ToString() + extension);
+                    _context.Add(project);
+                    await _context.SaveChangesAsync();
+                    string webRootPath = _hostingEnvironment.WebRootPath;
+                    var files = HttpContext.Request.Form.Files;
+                    var projectFromDb = await _context.Project.FindAsync(project.ProjectID);
+                    string extension;
+                    if (files.Count > 0)
+                    {
+                        extension = Path.GetExtension(files[0].FileName);
+                        string imageName = project.ProjectID + extension;
+                        string path = Path.Combine(webRootPath + SD.DefaultImagePath, imageName);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStream);
+                        }
+                    }
+                    else
+                    {
+                        extension = SD.DefaultImageExtension;
+                        var uploads = Path.Combine(webRootPath + SD.DefaultImagePath + SD.DefaultProjectImage);
+                        System.IO.File.Copy(uploads, webRootPath + SD.DefaultImagePath + project.ProjectID.ToString() + extension);
+                    }
+                    projectFromDb.ProjectImage = SD.DefaultImagePath + project.ProjectID + extension;
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+
                 }
-                projectFromDb.ProjectImage = SD.DefaultImagePath + project.ProjectID + extension;
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
             }
             ProjectClientViewModel model = new ProjectClientViewModel()
             {

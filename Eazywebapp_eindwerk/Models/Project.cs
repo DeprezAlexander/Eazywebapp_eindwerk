@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpressiveAnnotations.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -31,17 +32,15 @@ namespace Eazywebapp_eindwerk.Models
         //START DATE
         [Display(Name = "Start datum")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         //END DATE
         [Display(Name = "Eind datum")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         //HOSTING
-        [Display(Name = "Hosting in-house (J/N)")]
+        [Display(Name = "Hosting in-house (J/N)")]   
         public bool Hosting { get; set; }
 
         //HOSTING PRICE 
@@ -51,7 +50,6 @@ namespace Eazywebapp_eindwerk.Models
         //RENEWAL DATE
         [Display(Name = "Verval datum hosting")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime RenewalDate { get; set; }
 
         //OFFERTE PRICE

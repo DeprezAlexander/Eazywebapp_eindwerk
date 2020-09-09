@@ -21,16 +21,12 @@ namespace Eazywebapp_eindwerk.Models
 
         //INVOICE DATE
         [Display(Name = "Aanmaak datum")]
-        [Required(ErrorMessage = "Aanmaak datum is verplicht.")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime InvoiceDate { get; set; }
 
         //INVOICE Expiry
         [Display(Name = "Verval datum")]
-        [Required(ErrorMessage = "Verval datum is verplicht.")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime InvoiceExpiry { get; set; }
 
         //INVOICE NUMBER

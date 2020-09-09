@@ -73,14 +73,53 @@ namespace Eazywebapp_eindwerk.Controllers
         {
             if (ModelState.IsValid)
             {
-                var clientID = _context.Project.Where(s => s.ProjectID == invoice.ProjectID).Select(s => s.ClientID).FirstOrDefault();
-                var invoicePrice = _context.Project.Where(s => s.ProjectID == invoice.ProjectID).Select(s => s.OffertePrice).FirstOrDefault();
+                DateTime dDate = new DateTime(0001, 01, 01);
+                DateTime nDate = DateTime.Today;
+                
+                if(invoice.InvoiceDate == dDate)
+                {
+                    if(invoice.InvoiceExpiry == dDate)
+                    {
+                        var clientID = _context.Project.Where(s => s.ProjectID == invoice.ProjectID).Select(s => s.ClientID).FirstOrDefault();
+                        var invoicePrice = _context.Project.Where(s => s.ProjectID == invoice.ProjectID).Select(s => s.OffertePrice).FirstOrDefault();
 
-                invoice.InvoicePrice = invoicePrice;
-                invoice.ClientID = clientID;
-                _context.Add(invoice);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                        invoice.InvoicePrice = invoicePrice;
+                        invoice.ClientID = clientID;
+
+                        invoice.InvoiceExpiry = nDate.AddMonths(1);
+                        invoice.InvoiceDate = nDate;
+
+                        _context.Add(invoice);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+
+                        var clientID = _context.Project.Where(s => s.ProjectID == invoice.ProjectID).Select(s => s.ClientID).FirstOrDefault();
+                        var invoicePrice = _context.Project.Where(s => s.ProjectID == invoice.ProjectID).Select(s => s.OffertePrice).FirstOrDefault();
+
+                        invoice.InvoiceDate = nDate;
+
+                        invoice.InvoicePrice = invoicePrice;
+                        invoice.ClientID = clientID;
+                        _context.Add(invoice);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                else
+                {
+                    var clientID = _context.Project.Where(s => s.ProjectID == invoice.ProjectID).Select(s => s.ClientID).FirstOrDefault();
+                    var invoicePrice = _context.Project.Where(s => s.ProjectID == invoice.ProjectID).Select(s => s.OffertePrice).FirstOrDefault();
+
+                    invoice.InvoicePrice = invoicePrice;
+                    invoice.ClientID = clientID;
+                    _context.Add(invoice);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                
             }
             InvoiceClientProjectViewModel model = new InvoiceClientProjectViewModel()
             {
